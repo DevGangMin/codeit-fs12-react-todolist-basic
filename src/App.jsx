@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import Header from "./component/Header";
+import Header from "./component/header";
 import TodoInput from "./component/TodoInput";
 import TodoList from "./component/TodoList";
 
@@ -19,13 +19,27 @@ function App() {
     setTodos([newTodo, ...todos]);
   };
 
+  // 체크박스 토글 함수
+  const onUpdate = (targetId) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo,
+      ),
+    );
+  };
+
+  // 삭제 버튼 함수
+  const onDelete = (targetId) => {
+    setTodos(todos.filter((todo) => todo.id !== targetId));
+  };
+
   return (
     <div className="App">
       <Header />
       {/* TodoInput에 추가 함수를 전달 */}
       <TodoInput onCreate={onCreate} />
       {/* TodoList에 할 일 데이터 전달 */}
-      <TodoList todos={todos} />
+      <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
     </div>
   );
 }
